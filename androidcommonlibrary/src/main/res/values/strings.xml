@@ -1,0 +1,40 @@
+<resources>
+    <string name="app_name">AndroidCommonLibrary</string>
+
+    <!-- Date Util -->
+    <string name="date_util_term_less">less than</string>
+    <string name="date_util_term_a">a</string>
+    <string name="date_util_term_an">an</string>
+    <string name="date_util_unit_second">second</string>
+    <string name="date_util_unit_seconds">seconds</string>
+    <string name="date_util_unit_minute">minute</string>
+    <string name="date_util_unit_minutes">minutes</string>
+    <string name="date_util_unit_hour">hour</string>
+    <string name="date_util_unit_hours">hours</string>
+    <string name="date_util_unit_day">day</string>
+    <string name="date_util_unit_days">days</string>
+    <string name="date_util_unit_month">month</string>
+    <string name="date_util_unit_months">months</string>
+    <string name="date_util_unit_year">year</string>
+    <string name="date_util_unit_years">years</string>
+    <string name="date_util_prefix_lt">less than a</string>
+    <string name="date_util_prefix_about">about</string>
+    <string name="date_util_prefix_over">over</string>
+    <string name="date_util_prefix_almost">almost</string>
+    <string name="date_util_suffix">ago</string>
+    <!-- Color strings-->
+    <string name="rating_fill">#ffa53b</string>
+
+    <integer-array name="androidcolors">
+        <item>@color/blue</item>
+        <item>@color/purple</item>
+        <item>@color/green</item>
+        <item>@color/orange</item>
+        <item>@color/red</item>
+        <item>@color/darkblue</item>
+        <item>@color/darkpurple</item>
+        <item>@color/darkgreen</item>
+        <item>@color/darkorange</item>
+        <item>@color/darkred</item>
+    </integer-array>
+</resources>

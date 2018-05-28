@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="RecyclerViewWithPagination">
+        <attr name="list_type" format="integer" />
+        <attr name="list_spanCount" format="integer" />
+        <attr name="list_orientation" format="integer" />
+    </declare-styleable>
+
+    <declare-styleable name="Fonts">
+        <attr name="fontName" format="enum">
+            <enum name="RobotoLight" value="0" />
+            <enum name="RobotoBold" value="1" />
+            <enum name="RobotoMedium" value="2" />
+            <enum name="RobotoRegular" value="3" />
+            <enum name="RobotoThin" value="4" />
+        </attr>
+    </declare-styleable>
+</resources>

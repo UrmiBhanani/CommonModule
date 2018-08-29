@@ -1,6 +1,7 @@
 package com.androidcommonlibrary.crashhandler;
 
 import android.app.Activity;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.StrictMode;
 import android.util.Log;
@@ -10,12 +11,13 @@ import com.androidcommonlibrary.R;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
+import javax.mail.AuthenticationFailedException;
+import javax.mail.MessagingException;
 
 public class ExceptionHandler implements
 		Thread.UncaughtExceptionHandler  {
 	private final Activity myContext;
 	private final String LINE_SEPARATOR = "\n";
-	GMailSender sender;
 	StringBuilder errorReport;
 	private final String SUBJECT=":: YOUR_APP_NAME CRASH REPORT ::";
 
@@ -24,7 +26,7 @@ public class ExceptionHandler implements
 	private final String FROMEMAILPSD ="yourpassword";
 
 	/*Use credentials from whom you want to send mail*/
-	private final String TOEMAIL ="recieveremail@xyz.com";
+	private final String[] TOEMAIL = {"recieveremail@xyz.com"};
 
 	public ExceptionHandler(Activity context) {
 		myContext = context;
@@ -78,29 +80,20 @@ public class ExceptionHandler implements
 
 			System.out.print(errorReport.toString());
 
-			try {
+            try{
+                SendEmailAsyncTask email = new SendEmailAsyncTask();
+                email.m = new Mail(FROMEMAIL, FROMEMAILPSD);
+                email.m.set_from(FROMEMAIL);
+                email.m.setBody(errorReport.toString());
+                email.m.set_to(TOEMAIL);
+                email.m.set_subject(SUBJECT);
+                email.execute();
 
-				myContext.runOnUiThread(new Runnable() {
-					@Override
-					public void run() {
-						try{
-							sender = new GMailSender(FROMEMAIL, FROMEMAILPSD);
-							sender.sendMail(SUBJECT,
-									errorReport.toString(),
-									FROMEMAIL,
-									TOEMAIL);
-						}
-						catch (Exception e)
-						{
-							e.printStackTrace();
-						}
-					}
-				});
-
-
-			} catch (Exception e) {
-				Log.e("SendMail", e.getMessage(), e);
-			}
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
 
 
 		} catch (Exception e) {
@@ -110,5 +103,34 @@ public class ExceptionHandler implements
 		
 		android.os.Process.killProcess(android.os.Process.myPid());
 		System.exit(10);
+	}
+	class SendEmailAsyncTask extends AsyncTask<Void, Void, Boolean> {
+		Mail m;
+		public SendEmailAsyncTask() {}
+
+		@Override
+		protected Boolean doInBackground(Void... params) {
+			try {
+				if (m.send()) {
+					Log.d("SendMail", "---SENT---");
+				} else {
+					Log.e("SendMail", "---FAILED!!---");
+				}
+
+				return true;
+			} catch (AuthenticationFailedException e) {
+				Log.e(SendEmailAsyncTask.class.getName(), "Bad account details");
+				e.printStackTrace();
+				return false;
+			} catch (MessagingException e) {
+				Log.e(SendEmailAsyncTask.class.getName(), "Email failed");
+				e.printStackTrace();
+				return false;
+			} catch (Exception e) {
+				e.printStackTrace();
+				Log.e("SendMail", "---Unexpected error occured.!!---");
+				return false;
+			}
+		}
 	}
 }

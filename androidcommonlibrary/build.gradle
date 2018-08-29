@@ -18,6 +18,7 @@ android {
         }
     }
     packagingOptions {
+        pickFirst 'META-INF/LICENSE.txt' // picks the JavaMail license file
         exclude 'META-INF/services/javax.annotation.processing.Processor'
         exclude 'META-INF/DEPENDENCIES'
         exclude 'META-INF/NOTICE'
@@ -26,7 +27,12 @@ android {
         exclude 'META-INF/NOTICE.txt'
     }
 }
-
+repositories {
+    jcenter()
+    maven {
+        url "https://maven.java.net/content/groups/public/"
+    }
+}
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     testImplementation 'junit:junit:4.12'
@@ -38,13 +44,13 @@ dependencies {
     implementation files('libs/httpmime-4.3.5.jar')
     implementation 'com.jakewharton:butterknife:8.0.1'
     implementation 'com.github.castorflex.smoothprogressbar:library-circular:1.0.0'
-    implementation files('libs/mail.jar')
-    implementation files('libs/activation.jar')
     // for support multiple screen size. Refer following link: https://github.com/intuit/sdp
     api 'com.intuit.sdp:sdp-android:1.0.3'
     implementation 'com.google.code.gson:gson:2.8.0'
 
     //Image downloading
     api 'com.github.bumptech.glide:glide:3.7.0'
+    implementation 'com.sun.mail:android-mail:1.5.5'
+    implementation 'com.sun.mail:android-activation:1.5.5'
 
 }
